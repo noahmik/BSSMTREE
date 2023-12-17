@@ -22,7 +22,7 @@ router.post("/letter", async (req,res) => {
     }
 });
 
-router.get("/bring", async (res,req)=> {
+router.get("/bring", async (req,res)=> {
   try{
     const letterLogs = await Letter.findAll();   
     res.json(letterLogs);
