@@ -1,23 +1,20 @@
 const express = require("express");
-const multer = require("multer");
-const fs = require("fs");
-const router = express.Router();
-const { Sequelize, sequelize, DataTypes } = require("sequelize");
-const models = require("../models");
+const Letter = require("../models/letter");
 
-router.use(express.json());
+const router = express.Router();
 
 //db에 저장
-router.post("/letter", async (res,req) => {
-    console.log('1113241234123412341234')
+router.post("/letter", async (req,res) => {
+    console.log(req.body.writer);
+    console.log(req.body.recipient);
     try {
         const newLetter = {
             // letternum: req.body.LetterNum,
-            writer: req.body.Writer,
-            recipient: req.body.Recipient,
-            detail: req.body.Detail
+            writer: req.body.writer,
+            recipient: req.body.recipient,
+            detail: req.body.detail
         };
-        await models.letter.create(newLetter); //이거 실행 안 시킴?
+        await Letter.create(newLetter); //이거 실행 안 시킴?
         res.json({ success: true });
   } catch (err) {
         console.log(err);
@@ -27,7 +24,7 @@ router.post("/letter", async (res,req) => {
 
 router.get("/bring", async (res,req)=> {
   try{
-    const letterLogs = await models.search_log.findAll();   
+    const letterLogs = await Letter.findAll();   
     res.json(letterLogs);
   } catch (err) {
     console.log(err);

@@ -1,11 +1,10 @@
 const express = require("express");
-const app = express();
-const db = require("./models");
-const port = 5000;
-const letterRouter = require("./routes/letterRouter");
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 const { sequelize } = require("./models");
+const letterRouter = require("./routes/letterRouter");
+
+const app = express();
+app.set("port", process.env.PORT || 5000);
 
 sequelize
   .sync({ force: false })
@@ -16,8 +15,11 @@ sequelize
     console.error(err);
   });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use("/", letterRouter);
 
-app.listen(port, () => {
-  console.log(`listening  at http://localhost:${port}`);
+app.listen(app.get("port"), () => {
+  console.log(app.get("port"), "번 포트에서 대기 중");
 });
