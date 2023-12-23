@@ -3,8 +3,10 @@ const express = require("express");
 const { sequelize } = require("./models");
 const letterRouter = require("./routes/letterRouter");
 
+const cors = require("cors");
 const app = express();
 app.set("port", process.env.PORT || 5000);
+app.use(cors());
 
 sequelize
   .sync({ force: false })
