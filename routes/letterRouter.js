@@ -32,4 +32,14 @@ router.get("/bring", async (req,res)=> {
   }
 });
 
+router.get("/letternum", async (req, res) => {
+  try {
+    const letterNums = await Letter.findAll({ attributes: ['letternum'] });
+    res.json(letterNums);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "검색어를 조회하는 동안 오류가 발생했습니다." });
+  }
+});
+
 module.exports = router;
